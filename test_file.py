@@ -1,5 +1,6 @@
 import torch
 
+print(torch.cuda.is_available())
 
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
@@ -42,4 +43,3 @@ class MyData(Dataset):
         assert len(self.image_list) == len(self.label_list)
         return len(self.image_list)
 
-print(torch.cuda.is_available())
