@@ -8,4 +8,6 @@ for i in range(100):
 
 writer.close()
 
+#需要安裝pytorch環境的tensorboard
 
+#pip install tensorboard
