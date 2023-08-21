@@ -1,8 +1,7 @@
 import torch
 
 print(torch.cuda.is_available())
-
-import torch
+# 單獨call 一張圖片出來
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 from PIL import Image
