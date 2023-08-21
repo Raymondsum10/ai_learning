@@ -2,6 +2,7 @@ import torch
 
 print(torch.cuda.is_available())
 
+import torch
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 from PIL import Image
@@ -11,35 +12,30 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 class MyData(Dataset):
 
-    def __init__(self, root_dir, image_dir, label_dir, transform):
+    def __init__(self, root_dir, label_dir):
         self.root_dir = root_dir
-        self.image_dir = image_dir
         self.label_dir = label_dir
-        self.label_path = os.path.join(self.root_dir, self.label_dir)
-        self.image_path = os.path.join(self.root_dir, self.image_dir)
-        self.image_list = os.listdir(self.image_path)
-        self.label_list = os.listdir(self.label_path)
-        self.transform = transform
-        # 因为label 和 Image文件名相同，进行一样的排序，可以保证取出的数据和label是一一对应的
-        self.image_list.sort()
-        self.label_list.sort()
+        self.path = os.path.join(self.root_dir, self.label_dir)
+        self.img_path = os.listdir(self.path)
 
     def __getitem__(self, idx):
-        img_name = self.image_list[idx]
-        label_name = self.label_list[idx]
-        img_item_path = os.path.join(self.root_dir, self.image_dir, img_name)
-        label_item_path = os.path.join(self.root_dir, self.label_dir, label_name)
+        img_name = self.img_path[idx]
+        img_item_path = os.path.join(self.root_dir, self.label_dir, img_name)
         img = Image.open(img_item_path)
-
-        with open(label_item_path, 'r') as f:
-            label = f.readline()
-
-        # img = np.array(img)
-        img = self.transform(img)
-        sample = {'img': img, 'label': label}
-        return sample
+        label = self.label_dir
+        return img,label
 
     def __len__(self):
-        assert len(self.image_list) == len(self.label_list)
-        return len(self.image_list)
+        return len(self.img_path)
+
+
+dir_path="dataset/train/ants"
+root_dir = "dataset/train"
+ants_label_dir = "ants"
+
+ants_dataset = MyData(root_dir,ants_label_dir)
+print(ants_dataset[0])
+img,label = ants_dataset[0]
+img.show()
+
 
