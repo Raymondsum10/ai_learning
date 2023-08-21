@@ -2,6 +2,7 @@ import torch
 
 print(torch.cuda.is_available())
 # 單獨call 一張圖片出來
+
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 from PIL import Image
@@ -31,10 +32,15 @@ class MyData(Dataset):
 dir_path="dataset/train/ants"
 root_dir = "dataset/train"
 ants_label_dir = "ants"
+bees_label_dir = "bees"
 
 ants_dataset = MyData(root_dir,ants_label_dir)
-print(ants_dataset[0])
-img,label = ants_dataset[0]
+bees_dataset = MyData(root_dir,bees_label_dir)
+
+train_dataset = ants_dataset + bees_dataset
+print(len(train_dataset))
+
+# img,label = ants_dataset[1]
+
+img,label = bees_dataset[1]
 img.show()
-
-
