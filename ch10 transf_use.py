@@ -1,3 +1,4 @@
+#P12
 from PIL import Image
 
 from torchvision import transforms
