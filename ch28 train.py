@@ -53,14 +53,14 @@ writer = SummaryWriter("../logs_train")
 for i in range(epoch):
     print("-------第 {} 轮训练开始-------".format(i+1))
 
-    # 训练步骤开始
+    # 11-train训练步骤开始
     tudui.train()   #變成train mode,會對於特殊layer有用，例如dropout
     for data in train_dataloader:
         imgs, targets = data
         outputs = tudui(imgs)
         loss = loss_fn(outputs, targets)
 
-        # 优化器优化模型
+        # 12-优化器优化模型
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -70,7 +70,7 @@ for i in range(epoch):
             print("训练次数：{}, Loss: {}".format(total_train_step, loss.item()))
             writer.add_scalar("train_loss", loss.item(), total_train_step)
 
-    # 测试步骤开始
+    # 13-test测试步骤开始
     tudui.eval()    #把這個模型變成eval mode，對於特殊layer有用，例如dropout
     total_test_loss = 0
     total_accuracy = 0
@@ -89,7 +89,7 @@ for i in range(epoch):
     writer.add_scalar("test_accuracy", total_accuracy/test_data_size, total_test_step)
     total_test_step = total_test_step + 1
 
-    #保存模型>>完全模型+參數
+    # 14-保存模型>>完全模型+參數
     torch.save(tudui, "tudui_{}.pth".format(i))
     print("模型已保存")
 
