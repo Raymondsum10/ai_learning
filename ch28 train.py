@@ -1,42 +1,44 @@
 import torchvision
 from torch.utils.tensorboard import SummaryWriter
 
+
 from model import *
-# 准备数据集
+# import 另一個名字叫 model 的python file
+# 01-准备数据集
 from torch import nn
 from torch.utils.data import DataLoader
 
-#設置train的data，把他們變tensor
+#02-設置train的data，把他們變tensor
 train_data = torchvision.datasets.CIFAR10(root="../data", train=True, transform=torchvision.transforms.ToTensor(),
                                           download=True)
-#設置test的data，把他們變tensor
+#03-設置test的data，把他們變tensor
 test_data = torchvision.datasets.CIFAR10(root="../data", train=False, transform=torchvision.transforms.ToTensor(),
                                          download=True)
 
-# 查看兩個dataset的length 長度
+# 04-查看兩個dataset的length 長度
 train_data_size = len(train_data)
 test_data_size = len(test_data)
 # 如果train_data_size=10, 训练数据集的长度为：10
 print("训练数据集的长度为：{}".format(train_data_size))
 print("测试数据集的长度为：{}".format(test_data_size))
 
-# 利用 DataLoader 来加载数据集
+# 05-利用 DataLoader 来加载数据集
 train_dataloader = DataLoader(train_data, batch_size=64)
 test_dataloader = DataLoader(test_data, batch_size=64)
 
-# 创建网络模型
+# 06-创建网络模型
 tudui = Tudui()
 
-# 损失函数
+# 07-损失函数
 loss_fn = nn.CrossEntropyLoss()
 
-# 优化器
+# 08-优化器
 # learning_rate = 0.01
 # 1e-2=1 x (10)^(-2) = 1 /100 = 0.01
 learning_rate = 1e-2
 optimizer = torch.optim.SGD(tudui.parameters(), lr=learning_rate)
 
-# 设置训练网络的一些参数
+# 09-设置训练网络的一些参数
 # 记录训练的次数
 total_train_step = 0
 # 记录测试的次数
@@ -44,7 +46,7 @@ total_test_step = 0
 # 训练的轮数
 epoch = 10
 
-# 添加tensorboard
+# 10-添加tensorboard
 #查看的command : tensorboard --logdir="../logs_train" --port=6007
 writer = SummaryWriter("../logs_train")
 
